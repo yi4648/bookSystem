@@ -1,0 +1,86 @@
+.home .main .box .view .user-detail{
+    position: relative;
+    height: 95%;
+    background: #f7f7f9;
+}
+.home .main .box .view  .user-detail .detail-header {
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+
+}
+.home .main .box .view .user-detail .detail-header .input-group{
+    width: 40%;
+    margin-left: 20px;
+}
+.home .main .box .view .user-detail .user-list table tr{
+    height: 20%;
+}
+.home .main .box .view .page{
+   display: flex;
+   justify-content: center;
+   margin-top: 12px;
+   /* align-items: center; */
+}
+.home .main .box .view .page button{
+    color:#fff;
+    font: 400;
+    padding: 0 10px;
+    cursor: pointer;
+    background-color: #337Ab7;
+    border-radius: 6px;
+    margin-right: 10px
+}
+.home .main .box .view .page input{
+    width: 60px;
+    padding: 0 5px;
+    border: none;
+}
+
+
+/* 添加用户弹窗样式 */
+.home .main .box .view .modal-content{
+    display: none;
+    position: absolute;
+    font-size: 16px;
+    color:black;
+    width: 40%;
+    height: 50%;
+    left:365px;
+    top:160px;
+    z-index: 10;
+}
+.home .main .box .view .modal-content .modal-body{
+    font: 16px '宋体';
+    font-weight: 800;
+}
+.home .main .box .view .modal-content .gen{
+    box-sizing: border-box;
+    width: 60%;
+    height: 35px;
+    border: 1px solid #aaaaaa;
+    /* border-radius: 4px; */
+    padding: 5px 10px;
+
+}
+.home .main .box .view .modal-content .modal-body .sex label{
+    padding: 0 10px 0 60px;
+    /* margin-right: 10px; */
+}
+
+.home .main .box .view .modal-content .modal-body p .error1{
+    text-indent: 50px;
+    display: none;
+    color: red;
+    font-size: 12px;
+}
+
+.home .main .box .view .modal-content .modal-body p .btn{
+    margin-right: 15px;
+    float: right;
+    color: #fff;
+    background-color: #337ab7;
+
+}
+
+

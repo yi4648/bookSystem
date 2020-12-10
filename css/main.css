@@ -1,0 +1,92 @@
+.home{
+    height: 100%;
+    background-color:  #373d41;
+}
+.home header{
+    display: flex;
+    height: 8%;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 30px;
+    color:#fff;
+  }
+header .header-left{
+    display: flex;
+    align-items: center;
+    font: 25px '微软雅黑';
+    text-indent: 8px;
+      
+  }
+header .header-left .icon{
+      display: block;
+      width: 60px;
+      height: 60px;
+      background: url(../img/book.png) no-repeat center /cover;
+  }
+header .header-right{
+      display: flex;
+      align-items: center;
+      font: 20px '微软雅黑';
+  }
+header  .header-right .user-icon{
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: url(../img/user.png) no-repeat center /cover;
+      margin-right: 10px;
+}
+header .header-right .btn-exit{
+    background: transparent;
+    border: none;
+}
+header .header-right .btn-exit span{
+      display: block;
+      width: 20px;
+      height: 20px;
+      background: url(../img/exit.png) no-repeat center /cover;
+      margin-right: 10px;
+  }
+
+
+  .home .main{
+    display: flex;
+    height: 92%;
+  }
+  .home .main nav ul li{
+    padding: 10px 30px 10px 15px;
+    display: flex;
+    align-items: center;
+    font: 16px '宋体';
+    color: #fff;
+    border: 1px solid #272b38;
+    background: #333747;
+    cursor: pointer;
+  }
+  .home .main nav ul li .u-icon{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(../img/user-m.png) no-repeat center /cover;
+    margin-right: 10px;
+  }
+  .home .main nav ul li .b-icon{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(../img/book-m.png) no-repeat center /cover;
+    margin-right: 10px;
+  }
+
+  .home .main .box{
+    flex: 1;
+    background: #eaedf1;
+  }
+
+  .home .main .box .view{
+    height: 100%;
+    padding: 10px 10px;
+}
+
+
+
