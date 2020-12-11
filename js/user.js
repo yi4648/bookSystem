@@ -4,6 +4,7 @@ var pageSize = null;
 var queryName = null;
 //在页面刷新的第一次就执行获取数据
 getList();
+
 //根据输入的当前页码，和页的数据大小，和查询参数获取数据
 
 
@@ -29,7 +30,7 @@ function getList(pageNo, pageSize, searchName) {
                 // queryname = queryParam;
                 //判断查询页数是否超过总页数
                 // console.log(res);
-                if (data.pageNo > res.page.totalPage) {
+                if (data.page > res.page.totalPage) {
                     $("#pageNum").val("1");
                     alert("跳转查询页数过大");
                     getList();
@@ -60,13 +61,14 @@ function render(res) {
         let record = records[i]
         // console.log(record.fullName)
         // let time = (record.createTime).substring(0,10)
+        // console.log(parseInt(res.page.currPage-1)*(res.page.pageSize)+parseInt(i)+1)
         html += `<tr>
-        <td>${record && parseInt(i)+1}</td>
+        <td>${record && (res.page.currPage-1)*(res.page.pageSize)+parseInt(i)+1}</td>
             <td>${record && record.uno}</td>
             <td>${record && record.uname}</td>
             <td>${record && record.usex}</td>
             <td>${record && record.urole}</td>
-            <td>${record && record.createtime.substring(0,10)}</td>
+            <td>${record && record.createtime.substring(0, 10)}</td>
             <td>
                 <button type="button" class="btn btn-info modify-btn" onclick="modList('${record.no}')" >修改</button>
                 <button type="button" class="btn btn-danger delete-btn" onclick="delList('${record.no}')">删除</button>
@@ -75,7 +77,6 @@ function render(res) {
 
     }
     $('#table-list').html(html);
-
 }
 
 
@@ -97,7 +98,7 @@ $("#prev").click(function () {
     if (pageNum > 1) {
         pageNum--;
     }
-    console.log(pageNum);
+    // console.log(pageNum);
     $("#pageNum").val(pageNum);
     getList(pageNum, pageSize, queryName);
 });
@@ -106,7 +107,7 @@ $("#next").click(function () {
     var pageNum = $("#pageNum").val();
     var totalPage = $("#totalPage").html();
 
-    console.log(totalPage);
+    // console.log(totalPage);
     if (pageNum < totalPage) {
         pageNum++;
     }
@@ -114,45 +115,54 @@ $("#next").click(function () {
     $("#pageNum").val(pageNum);
     getList(pageNum, pageSize, queryName);
 });
-//搜索的点击事件
 
+
+
+//搜索的点击事件
 $('#search').click(function () {
     var searchName = $("#searchName").val();
-    // var queryParam = {
+    // var queryPara/././././.m = {
     //     name: searchName
     // }
-    getList(noPage, pageSize, searchName);
+    $("#pageNum").val(1)
+    getList(1,pageSize,searchName);
 })
 
 
 //添加用户的点击事件
 // 添加用户按钮监听，实现弹出和关闭功能
-$('#add-user').click(function(){
-    $('#add-modal').css('display','block');
+$('#add-user').click(function () {
+    $('#add-modal').css('display', 'block');
 })
-$('#add-close').click(function(){
-    $('#add-modal').css('display','none');
+$('#add-close').click(function () {
+    $('#add-modal').css('display', 'none');
 })
-$('.close').click(function(){
-    $('#add-modal').css('display','none');
+$('.close').click(function () {
+    $('#add-modal').css('display', 'none');
 })
 
 
 // 性别选择
-// function gt(t){
-//     t.setAttribute('checked','true');
-// }
+function gd(t){
+    t.setAttribute('checked','true')
+}
+var aGender = $('input[name="gender"]')
 // 添加用户提交表单
-$("#add-confirm").click(function(){
+$("#add-confirm").click(function () {
     let uno = $('#account').val();
     let password = $('#password').val();
     let uname = $('#addUame').val();
-    // let
-    let data={
+    let usex;
+    for(var a of aGender){
+        if(a.checked){
+            usex = a.getAttribute('value')
+        }
+    }
+    let data = {
         "uno": uno,
         "password": password,
-        "uname":uname,
-        // "usex": usex
+        "uname": uname,
+        "usex": usex
     }
     $.ajax({
         method: 'POST',
@@ -160,16 +170,16 @@ $("#add-confirm").click(function(){
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify(data),
-        success: function(res) {
-            if(res.msg =="success"){
-                $('#add-modal').css('display','none');
+        success: function (res) {
+            if (res.msg == "success") {
+                $('#add-modal').css('display', 'none');
                 getList(noPage, pageSize, queryName);
                 console.log(res.msg)
-                // alert('添加成功');
-            }else{
-                alert("添加失败")
+                alert('添加成功');
             }
-
+        },
+        error: function () {
+            alert("账号已存在")
         }
     })
 })
@@ -184,7 +194,7 @@ function delList(no) {
     if (del) {
         $.ajax({
             method: "DELETE",
-            url: "http://localhost:8181/manager/message/delete/"+ no,// manager/message/update
+            url: "http://localhost:8181/manager/message/delete/" + no,// manager/message/update
             dataType: "JSON",
             contentType: 'application/x-www-form-urlencoded',
             success: function (res) {
@@ -198,13 +208,13 @@ function delList(no) {
 
 
 // 修改的点击事件
-function modList(no){
+function modList(no) {
     $.ajax({
         method: 'GET',
-        url: 'http://localhost:8181/manager/message/info/'+ no,
+        url: 'http://localhost:8181/manager/message/info/' + no,
         dataType: 'json',
-        success: function(res) {
-            if(res.msg =="success"){
+        success: function (res) {
+            if (res.msg == "success") {
                 let user = res.message;
                 let html2 = `<div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="mod-del"><span aria-hidden="true">&times;</span></button>
@@ -212,67 +222,75 @@ function modList(no){
                 </div>
                 <div class="modal-body">
                   <form name="a">
-                      <p><label for="uno">账号：</label><input type="tel" name="uno" id="uno" class="gen" value="${user.uno}"></p>
+                      <p><label for="uno">账号：</label><input type="tel" name="uno" id="uno" class="gen" value="${user.uno}" disabled></p>
                       <p><label for="x-password">密码：</label><input type="password" name="password" id="x-password" class="gen" value="${user.password}">
                           <span id="error1" class="error1">密码安全系数过低！</span>
                       </p>
                       <p><label  for="x-username">姓名：</label><input type="text" name="dd" id="x-username" class="gen" value="${user.uname}"></p>
                       <p class="sex">
-                          <span>性别</span>
-                          <label for="male">男</label><input type="radio" name="gender" id="male" value="男"/>
-                          <label for="female">女</label><input type="radio" name="gender" id="female" value="女"/>
+                          <label for="gender">性别：
+                              <input type="radio" name="gender"  value="男" onclick="gd(this)"/>男
+                              <input type="radio" name="gender" value="女" onclick="gd(this)"/>女
+                          </label>
                       </p>
                       <p>
                           <button type="button" class="btn btn-default" id="mod-confirm">确定</button>
                           <button type="button" class="btn btn-default" id="mod-close" >取消</button>
                       </p>
                   </form>`
-                    $("#mod-modal").html(html2);
-                    $("#mod-modal").css("display","block")
-                    $('#mod-del').click(function(){
-                        $('#mod-modal').css('display','none');
-                    })
-                    $('#mod-close').click(function(){
-                        $('#mod-modal').css('display','none');
-                    })
+                $("#mod-modal").html(html2);
+                $("#mod-modal").css("display", "block")
+                $('#mod-del').click(function () {
+                    $('#mod-modal').css('display', 'none');
+                })
+                $('#mod-close').click(function () {
+                    $('#mod-modal').css('display', 'none');
+                })
                 // 提交验证表单
-                $("#mod-confirm").click(function(){
+                function gd(t){
+                    t.setAttribute('checked','true')
+                }
+                var aGender = $('input[name="gender"]')
+                $("#mod-confirm").click(function () {
                     console.log(1)
                     let uno = $('#uno').val();
                     let password = $('#x-password').val();
                     let uname = $('#x-username').val();
-                    // let usex = $('input[type).val();
-                    // console.log(usex);
-
-                    let data={
+                    let usex;
+                    for(var a of aGender){
+                        if(a.checked){
+                            usex = a.getAttribute('value')
+                        }
+                    }
+                    let data = {
                         "uno": uno,
                         "password": password,
-                        "uname":uname
-                        // "usex": usex
+                        "uname": uname,
+                        "usex": usex
                     };
                     console.log(data);
                     console.log(JSON.stringify(data));
                     $.ajax({
                         method: 'POST',
-                        url: 'http://localhost:8181/manager/message/update/'+no,
+                        url: 'http://localhost:8181/manager/message/update/' + no,
                         dataType: 'json',
                         contentType: 'application/json',
                         data: JSON.stringify(data),
-                        success: function(res) {
+                        success: function (res) {
                             console.log(2)
                             console.log(res)
-                            if(res.msg =="success"){
-                                $('#mod-modal').css('display','none');
+                            if (res.msg == "success") {
+                                $('#mod-modal').css('display', 'none');
                                 getList(noPage, pageSize, queryName);
                                 alert(res.msg);
-                            }else{
+                            } else {
                                 alert(res.msg)
                             }
 
                         }
                     })
                 })
-            }else{
+            } else {
                 alert(res.msg)
             }
 
@@ -281,26 +299,6 @@ function modList(no){
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // function test(){

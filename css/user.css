@@ -63,9 +63,8 @@
     padding: 5px 10px;
 
 }
-.home .main .box .view .modal-content .modal-body .sex label{
+.home .main .box .view .modal-content .modal-body .sex input{
     padding: 0 10px 0 60px;
-    /* margin-right: 10px; */
 }
 
 .home .main .box .view .modal-content .modal-body p .error1{

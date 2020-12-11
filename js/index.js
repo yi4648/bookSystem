@@ -28,26 +28,32 @@ function ulogin(){
 
 
 $("#login").click(function(){
-    if(test() == 'flase'){
-
-    }else{
-        ulogin()
-    }
-})
-
-// 前端表单的校验
-function test(){
     if(document.a.username.value.length!=11){
         alert("手机号长度必须为11位！");
         document.a.username.focus();
-        return false;
+        return;
     }
     if(document.a.password.value == ""){
         alert("密码为必填项");
         document.a.password.focus();
-        return false;
+        return;
     }
-}
+        ulogin()
+})
+
+// 前端表单的校验
+// function test(){
+//     if(document.a.username.value.length!=11){
+//         alert("手机号长度必须为11位！");
+//         document.a.username.focus();
+//         return false;
+//     }
+//     if(document.a.password.value == ""){
+//         alert("密码为必填项");
+//         document.a.password.focus();
+//         return false;
+//     }
+// }
   function checkNumber(obj){
         var reg = /^[0-9]+$/;
         if(obj!=""&&!reg.test(obj)){
