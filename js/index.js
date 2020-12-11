@@ -7,19 +7,16 @@ function ulogin(){
     }
     $.ajax({
         method: 'POST',
-        // url: 'http://47.107.145.174:8080/librarymanagement/login',
-
-        // fastmock
-        url:'http://47.107.145.174:8081/api/login',
+        url: 'http://localhost:8181/login',
         dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        
+        // contentType: 'application/json',
+        // data: JSON.stringify(data),
+        data,
         success: function(res) {
-            if(res.success="true"){
+            if(res.msg=="success"){
                 // 存储本地信息
-                localStorage.setItem("message",res.user);
-                console.log(res.user)
+                // localStorage.setItem("message",res.message);
+                // console.log(localStorage.getItem("message"))
                 window.location="main.html"
             }else{
                 alert(res.msg);
@@ -31,11 +28,31 @@ function ulogin(){
 
 
 $("#login").click(function(){
+    if(test() == 'flase'){
+
+    }else{
         ulogin()
+    }
 })
 
-
-
-
-
+// 前端表单的校验
+function test(){
+    if(document.a.username.value.length!=11){
+        alert("手机号长度必须为11位！");
+        document.a.username.focus();
+        return false;
+    }
+    if(document.a.password.value == ""){
+        alert("密码为必填项");
+        document.a.password.focus();
+        return false;
+    }
+}
+  function checkNumber(obj){
+        var reg = /^[0-9]+$/;
+        if(obj!=""&&!reg.test(obj)){
+        alert('只能输入数字！');
+        return false;
+    }
+}
 

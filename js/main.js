@@ -1,21 +1,21 @@
 $(function () {
     // 退出登录
     $('#exit').click(function () {
-        console.log(2)
+        // window.location.href= "index.html"
         $.ajax({
             method: 'GET',
             // 退出登录的网址
-            url: 'http://47.107.145.174:8081/api/logout',
+            url: 'http://localhost:8181/logout',
             dataType: 'json',
-            contentType: 'application/json',
             success: function (res) {
-                if (res.success == "true") {
-                    console.log(1)
-                    window.location= "index.html"
+                if (res.msg == "success") {
+                    window.location.href = "index.html"
+                    sessionStorage.clear()
+                    console.log(localStorage.getItem("message"))
                     localStorage.clear()
                     // window.location.reload()
-                    alter("退出登录成功")
                 } else {
+                    // window.location = "index.html"
                     alert("退出登录失败");
                 }
             }
