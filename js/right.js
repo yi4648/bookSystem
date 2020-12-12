@@ -1,7 +1,8 @@
 
-// let message = localStorage.getItem("message");
-// // if(message.urole){
-// //     $('#add-user').css("display","none");
-// //     $(".modify-btn").css("display","none");
-// //     $(".delete-btn").css("display","none");
-// // }
+let message = JSON.parse(localStorage.getItem("message"));
+$('#identity').html(message);
+if(message.urole == "普通管理员"){
+    $('#add-user').attr("disabled","false");
+    $(".modify-btn").attr("disabled","false");
+    $(".delete-btn").attr("disabled","false");
+}

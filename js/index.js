@@ -15,7 +15,7 @@ function ulogin(){
         success: function(res) {
             if(res.msg=="success"){
                 // 存储本地信息
-                // localStorage.setItem("message",res.message);
+                localStorage.setItem("loginInfo",JSON.stringify(res.message));
                 // console.log(localStorage.getItem("message"))
                 window.location="main.html"
             }else{
@@ -38,23 +38,9 @@ $("#login").click(function(){
         document.a.password.focus();
         return;
     }
-        ulogin()
+    ulogin()
 })
-
-// 前端表单的校验
-// function test(){
-//     if(document.a.username.value.length!=11){
-//         alert("手机号长度必须为11位！");
-//         document.a.username.focus();
-//         return false;
-//     }
-//     if(document.a.password.value == ""){
-//         alert("密码为必填项");
-//         document.a.password.focus();
-//         return false;
-//     }
-// }
-  function checkNumber(obj){
+function checkNumber(obj){
         var reg = /^[0-9]+$/;
         if(obj!=""&&!reg.test(obj)){
         alert('只能输入数字！');

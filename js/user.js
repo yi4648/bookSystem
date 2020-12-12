@@ -6,8 +6,6 @@ var queryName = null;
 getList();
 
 //根据输入的当前页码，和页的数据大小，和查询参数获取数据
-
-
 function getList(pageNo, pageSize, searchName) {
     let data = {
         "page": pageNo || 1,
@@ -30,9 +28,9 @@ function getList(pageNo, pageSize, searchName) {
                 // queryname = queryParam;
                 //判断查询页数是否超过总页数
                 // console.log(res);
-                if (data.page > res.page.totalPage) {
+                if (res.list == "") {
                     $("#pageNum").val("1");
-                    alert("跳转查询页数过大");
+                    alert("查询错误");
                     getList();
                 }
                 // console.log(res);
@@ -74,7 +72,10 @@ function render(res) {
                 <button type="button" class="btn btn-danger delete-btn" onclick="delList('${record.no}')">删除</button>
             </td>
         </tr>`
-
+        if(user.urole == "管理员"){
+            $(".modify-btn").attr("disabled","false");
+            $(".delete-btn").attr("disabled","false");
+        }
     }
     $('#table-list').html(html);
 }
@@ -83,14 +84,20 @@ function render(res) {
 // 页面显示当前的页数
 //转跳的点击事件
 $("#jump").click(function () {
+    // 判断查询页数是否过大
+    var totalPage = $("#totalPage").html();
+    if($("pageNum").val() > totalPage){
+        alert('查询页数过大！！');
+        $("#pageNum").val(1)
+    }
     //判断查询页数是否过小
     if ($("#pageNum").val() < 1) {
         alert("查询页数过小！！");
         $("#pageNum").val(1)
-    } else {
-        getList($("#pageNum").val());
     }
+    getList($("#pageNum").val());
 });
+
 //上一页的点击事件
 $("#prev").click(function () {
 
@@ -121,7 +128,7 @@ $("#next").click(function () {
 //搜索的点击事件
 $('#search').click(function () {
     var searchName = $("#searchName").val();
-    // var queryPara/././././.m = {
+    // var queryParam = {
     //     name: searchName
     // }
     $("#pageNum").val(1)
@@ -140,8 +147,6 @@ $('#add-close').click(function () {
 $('.close').click(function () {
     $('#add-modal').css('display', 'none');
 })
-
-
 // 性别选择
 function gd(t){
     t.setAttribute('checked','true')
@@ -185,11 +190,14 @@ $("#add-confirm").click(function () {
 })
 
 
+
+
 //删除的点击事件
 function delList(no) {
     // console.log(id);
     // console.log(noPage);
     var del = confirm("是否删除");
+
     // console.log(del);
     if (del) {
         $.ajax({
@@ -282,7 +290,7 @@ function modList(no) {
                             if (res.msg == "success") {
                                 $('#mod-modal').css('display', 'none');
                                 getList(noPage, pageSize, queryName);
-                                alert(res.msg);
+                                alert("修改成功",res.msg);
                             } else {
                                 alert(res.msg)
                             }
@@ -299,6 +307,47 @@ function modList(no) {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // function test(){

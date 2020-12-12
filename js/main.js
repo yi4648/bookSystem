@@ -10,8 +10,6 @@ $(function () {
             success: function (res) {
                 if (res.msg == "success") {
                     window.location.href = "index.html"
-                    sessionStorage.clear()
-                    console.log(localStorage.getItem("message"))
                     localStorage.clear()
                     // window.location.reload()
                 } else {
@@ -24,14 +22,14 @@ $(function () {
 
 
     // 返回是否为超级管理员
-    // function jude() {
-    //     let message = localStorage.getItem("message");
-    //     $('#identity').html(message.urole);
-    // }
-    // jude()
-    // $("#prev").click = function(){
-    //     alert("我是prev");
-    // }
+    function jude() {
+        let message = localStorage.getItem("userInfo");
+        $('#identity').html(message.urole);
+    }
+    jude()
+    $("#prev").click = function(){
+        alert("我是prev");
+    }
 
 });
 
