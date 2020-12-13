@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/util.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/user.css">
+    <link rel="stylesheet" href="css/book.css">
   </head>
   <style>
 </style>
@@ -29,12 +30,12 @@
         <div class="main">
             <nav>
                 <ul class="nav">
-                    <li class="user-manager"><span class="u-icon"><a></span>用户管理</a></li>
-                    <li class="book-manager"><span class="b-icon"><a></span>图书管理</a></li>
+                    <li class="user-manager" id="user-manager"><span class="u-icon"><a></span>用户管理</a></li>
+                    <li class="book-manager" id="book-manager"><span class="b-icon"><a></span>图书管理</a></li>
                 </ul>
             </nav>
             <div class="box">
-                <div class="view">
+                <div class="view" id="view">
                     <div class="user-detail">
                         <!-- 用户管理-->
                         <div class="detail-header">
@@ -48,7 +49,7 @@
                           </div>
                           <!-- 用户列表 -->
                           <div class="user-list">
-                              <table class="table table-bordered table-hover" id="table-list">
+                              <table class="table table-bordered table-hover" id="user-table-list">
                                 
                               </table>
                           </div>
@@ -90,14 +91,76 @@
                     <!-- 修改用户弹窗 -->
                     <div class="modal-content" id="mod-modal"></div>
                 </div>
+                <div class="view2" id="view2">
+                    <div class="book-detail">
+                        <div class="detail-header">
+                            <div class="input-group">
+                               <input type="text" class="form-control" placeholder="输入书名查询"  id="search-bookName">
+                                <input type="text" class="form-control" placeholder="输入出版社查询"  id="search-bookPub">
+                                <button class="btn btn-default" type="button" id="book-search">搜索</button>
+                            </div>
+                            <button type="button" class="btn btn-primary" id="add-book">图书录入</button>
+                        </div>
+                          <!-- 图书列表 -->
+                        <div class="book-list">
+                            <table class="table table-bordered table-hover" id="book-table-list">
+                              
+                            </table>
+                        </div>
+                    </div>
+                    <!-- 分页 -->
+                    <div class="page" id="page">
+                        <button class="page-up" id="prev2">上一页</button>
+                        <input type="text" value="1" id="pageNum2">
+                        <button class="page-jump" id="jump2">跳转</button>
+                        <button class="page-down" id="next2">下一页</button>
+                        <span>共 <span id="totalPage2"></span> 页</span>
+                    </div>
+                    <!-- 图书录入弹窗 -->
+                    <div class="book-content" id="bookadd-modal">
+                        <div class="book-header">
+                          <button type="button" class="close2" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
+                          <h4 class="book-title">图书录入</h4>
+                        </div>
+                        <div class="book-body">
+                            <form name="a">
+                                <p><label for="bookName">书名：</label><input type="text" name="uno" id="bookName-a" class="gan" placeholder="请输入书名"></p>
+                                <p><label  for="bookPub">出版社：</label><input type="text" name="uname" id="bookPub-a" class="gan"></p>
+                                <p class="gen">
+                                    <label  for="count">数量：</label><input type="number" name="uname" id="count-a" class="gan">
+                                </p>
+                                <p class="type">
+                                    <label for="bookType">类型:&nbsp;&nbsp;</label>
+                                    <select name="" id="bookType" class="gbn">
+                                        <option value="哲学类">哲学类</option>
+                                        <option value="军事类">军事类</option>
+                                        <option value="经济类">经济类</option>
+                                        <option value="文化类">文化类</option>
+                                        <option value="艺术类">艺术类</option>
+                                        <option value="综合类">综合类</option>
+                                        <option value="暂不分类">暂不分类</option>
+                                    </select>
+                                </p>
+                                <p>
+                                    <button type="button" class="btn" id="book-confirm-a">确定</button>
+                                    <button type="button" class="btn" id="book-close-a">取消</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- 修改图书信息弹窗 -->
+                    <div class="book-content" id="bookmod-modal">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script> -->
     <script src="js/main.js"></script>
-    <script src="js/user.js"></script>
-    <script src="js/right.js"></script>
+    <!-- <script src="js/user.js"></script> -->
+    <!-- <script src="js/right.js"></script> -->
+    <script src="js/book.js"></script>
 </body>
 </html>

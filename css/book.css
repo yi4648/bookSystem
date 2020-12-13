@@ -1,0 +1,162 @@
+.home .main .box .view2 .book-detail{
+    position: relative;
+    height: 95%;
+    background: #f7f7f9;
+  }
+
+.home .main .box .view2 .book-detail .detail-header{
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.home .main .box .view2 .book-detail .detail-header .input-group input{
+    width: 40%;
+    margin-right: 20px;
+    border-radius: 6px;
+}
+/* .home .main .box .view .user-detail .book-list table tr{
+    height: 20%;
+} */
+
+
+/* 分页样式 */
+.home .main .box .view2 .page{
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+    /* align-items: center; */
+ }
+
+ .home .main .box .view2 .page button{
+    color:#fff;
+    font: 400;
+    padding: 0 10px;
+    cursor: pointer;
+    background-color: #337Ab7;
+    border-radius: 6px;
+    margin-right: 10px
+}
+.home .main .box .view2 .page input{
+    width: 60px;
+    padding: 0 5px;
+    border: none;
+}
+
+/* 添加用户弹窗样式 */
+.home .main .box .view2 .book-content{
+    display: none;
+    position: absolute;
+    font-size: 16px;
+    color:black;
+    width: 40%;
+    height: 50%;
+    left:365px;
+    top:160px;
+    z-index: 10;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+    border: 1px solid rgba(0,0,0,.2);
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #fff;
+}
+.home .main .box .view2 .book-content .book-header{
+    padding: 15px;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 1.42857143;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.home .main .box .view2 .book-content .book-header .close2{
+    height: 100%;
+    margin-top: -2px;
+    padding: 0;
+    cursor: pointer;
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    opacity: .2;
+    font-family: inherit;
+}
+.home .main .box .view2 .book-content .book-header .book-title{
+    margin: 0;
+    line-height: 1.42857143;
+    font-size: 18px;
+    font-family: inherit;
+    font-weight: 500;
+    color: inherit;
+    display: block;
+}
+.home .main .box .view2 .book-content .book-body{
+    font: 16px '宋体';
+    font-weight: 800;
+    position: relative;
+    padding: 15px;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+.home .main .box .view .book-content .book-body p{
+    margin: 0 0 10px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font: 16px '宋体';
+    font-weight: 800;
+}
+.home .main .box .view .book-content .book-body p label{
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: 700;
+    cursor: default;
+    font: 16px '宋体';
+    color: black;
+}
+
+.home .main .box .view2 .book-content .book-body .gan{
+    box-sizing: border-box;
+    width: 60%;
+    height: 35px;
+    border: 1px solid #aaaaaa;
+    /* border-radius: 4px; */
+    padding: 5px 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    margin-left: 20px;
+}
+.home .main .box .view2 .book-content .book-body p:nth-child(2) .gan{
+    margin-left: 4px;
+}
+.home .main .box .view2 .book-content .book-body .btn{
+    margin-right: 15px;
+    float: right;
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #ccc;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: inherit;
+    text-transform: none;
+}

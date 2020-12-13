@@ -25,7 +25,7 @@ function getList(pageNo, pageSize, searchName) {
                 // console.log(noPage);
                 pageSize = res.page.pageSize;
                 dataList = res.page.list;
-                // queryname = queryParam;
+                queryName = queryParam;
                 //判断查询页数是否超过总页数
                 // console.log(res);
                 if (res.list == "") {
@@ -77,7 +77,7 @@ function render(res) {
             $(".delete-btn").attr("disabled","false");
         }
     }
-    $('#table-list').html(html);
+    $('#user-table-list').html(html);
 }
 
 
@@ -86,7 +86,7 @@ function render(res) {
 $("#jump").click(function () {
     // 判断查询页数是否过大
     var totalPage = $("#totalPage").html();
-    if($("pageNum").val() > totalPage){
+    if($("#pageNum").val() > totalPage){
         alert('查询页数过大！！');
         $("#pageNum").val(1)
     }
@@ -126,7 +126,7 @@ $("#next").click(function () {
 
 
 //搜索的点击事件
-$('#search').click(function () {
+$('#search-bookName').click(function () {
     var searchName = $("#searchName").val();
     // var queryParam = {
     //     name: searchName
@@ -178,8 +178,9 @@ $("#add-confirm").click(function () {
         success: function (res) {
             if (res.msg == "success") {
                 $('#add-modal').css('display', 'none');
-                getList(noPage, pageSize, queryName);
-                console.log(res.msg)
+                // getList(noPage, pageSize, queryName);
+                  getList()
+                // console.log(res.msg)
                 alert('添加成功');
             }
         },
@@ -245,7 +246,7 @@ function modList(no) {
                           <button type="button" class="btn btn-default" id="mod-confirm">确定</button>
                           <button type="button" class="btn btn-default" id="mod-close" >取消</button>
                       </p>
-                  </form>`
+                  </form></div>`
                 $("#mod-modal").html(html2);
                 $("#mod-modal").css("display", "block")
                 $('#mod-del').click(function () {
@@ -304,8 +305,6 @@ function modList(no) {
 
         }
     })
-
-
 }
 
 
