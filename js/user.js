@@ -3,10 +3,9 @@ var noPage = null;
 var pageSize = null;
 var queryName = null;
 //在页面刷新的第一次就执行获取数据
-getList();
-
+getUserList();
 //根据输入的当前页码，和页的数据大小，和查询参数获取数据
-function getList(pageNo, pageSize, searchName) {
+function getUserList(pageNo, pageSize, searchName) {
     let data = {
         "page": pageNo || 1,
         "limit": pageSize || 8,
@@ -25,16 +24,16 @@ function getList(pageNo, pageSize, searchName) {
                 // console.log(noPage);
                 pageSize = res.page.pageSize;
                 dataList = res.page.list;
-                queryName = queryParam;
+                // queryName = queryParam;
                 //判断查询页数是否超过总页数
-                // console.log(res);
-                if (res.list == "") {
+                if (res.page.list == "") {
+                    console.log(1)
                     $("#pageNum").val("1");
                     alert("查询错误");
-                    getList();
+                    getUserList();
                 }
                 // console.log(res);
-                render(res);
+                renderUser(res);
             }
         }
     })
@@ -42,7 +41,7 @@ function getList(pageNo, pageSize, searchName) {
 
 
 //把数据渲染到页面
-function render(res) {
+function renderUser(res) {
     // console.log(res.totalPage);
     $("#totalPage").html(res.page.totalPage);
     let html = `<tr>
@@ -57,27 +56,41 @@ function render(res) {
     let records = res.page.list;
     for (let i in records) {
         let record = records[i]
-        // console.log(record.fullName)
-        // let time = (record.createTime).substring(0,10)
-        // console.log(parseInt(res.page.currPage-1)*(res.page.pageSize)+parseInt(i)+1)
-        html += `<tr>
-        <td>${record && (res.page.currPage-1)*(res.page.pageSize)+parseInt(i)+1}</td>
-            <td>${record && record.uno}</td>
-            <td>${record && record.uname}</td>
-            <td>${record && record.usex}</td>
-            <td>${record && record.urole}</td>
-            <td>${record && record.createtime.substring(0, 10)}</td>
-            <td>
-                <button type="button" class="btn btn-info modify-btn" onclick="modList('${record.no}')" >修改</button>
-                <button type="button" class="btn btn-danger delete-btn" onclick="delList('${record.no}')">删除</button>
-            </td>
-        </tr>`
-        if(user.urole == "管理员"){
-            $(".modify-btn").attr("disabled","false");
-            $(".delete-btn").attr("disabled","false");
+        if(record.urole == "管理员"){
+            html += `<tr>
+            <td>${record && (res.page.currPage-1)*(res.page.pageSize)+parseInt(i)+1}</td>
+                <td>${record && record.uno}</td>
+                <td>${record && record.uname}</td>
+                <td>${record && record.usex}</td>
+                <td>${record && record.urole}</td>
+                <td>${record && record.createtime.substring(0, 10)}</td>
+                <td>
+                    <button type="button" class="btn btn-info modify-btn" onclick="modUserList('${record.no}')" disabled >修改</button>
+                    <button type="button" class="btn btn-danger delete-btn" onclick="delUserList('${record.no}')" disabled>删除</button>
+                </td>
+            </tr>`
+        }else{
+            html += `<tr>
+            <td>${record && (res.page.currPage-1)*(res.page.pageSize)+parseInt(i)+1}</td>
+                <td>${record && record.uno}</td>
+                <td>${record && record.uname}</td>
+                <td>${record && record.usex}</td>
+                <td>${record && record.urole}</td>
+                <td>${record && record.createtime.substring(0, 10)}</td>
+                <td>
+                    <button type="button" class="btn btn-info modify-btn-user" onclick="modUserList('${record.no}')" >修改</button>
+                    <button type="button" class="btn btn-danger delete-btn-user" onclick="delUserList('${record.no}')">删除</button>
+                </td>
+            </tr>`
         }
     }
     $('#user-table-list').html(html);
+    loginInfo = JSON.parse(localStorage.getItem("res"))
+    if(loginInfo.user.urole == "普通用户"){
+        $('#add-user').attr("disabled",true);
+        $(".modify-btn-user").attr("disabled",true);
+        $(".delete-btn-user").attr("disabled",true);
+    }
 }
 
 
@@ -95,7 +108,7 @@ $("#jump").click(function () {
         alert("查询页数过小！！");
         $("#pageNum").val(1)
     }
-    getList($("#pageNum").val());
+    getUserList($("#pageNum").val());
 });
 
 //上一页的点击事件
@@ -107,7 +120,7 @@ $("#prev").click(function () {
     }
     // console.log(pageNum);
     $("#pageNum").val(pageNum);
-    getList(pageNum, pageSize, queryName);
+    getUserList(pageNum, pageSize, queryName);
 });
 // 下一页的点击事件
 $("#next").click(function () {
@@ -120,19 +133,20 @@ $("#next").click(function () {
     }
     // console.log(pageNum);
     $("#pageNum").val(pageNum);
-    getList(pageNum, pageSize, queryName);
+    getUserList(pageNum, pageSize, queryName);
 });
 
 
 
 //搜索的点击事件
-$('#search-bookName').click(function () {
-    var searchName = $("#searchName").val();
+$('#search-userName').click(function () {
+    var searchName = $("#searchUserName").val();
     // var queryParam = {
     //     name: searchName
     // }
     $("#pageNum").val(1)
-    getList(1,pageSize,searchName);
+    getUserList(1,pageSize,searchName);
+    $("#searchUserName").val("");
 })
 
 
@@ -155,8 +169,30 @@ var aGender = $('input[name="gender"]')
 // 添加用户提交表单
 $("#add-confirm").click(function () {
     let uno = $('#account').val();
+    if(uno == ""){
+        return;
+    }
+    //表单验证账号为11位
+    let reg = /^1\d{10}$/ ;
+    if(uno!=""&&!reg.test(uno)){
+        alert('只能输入11位数字！！！');
+        return;
+    }
+
     let password = $('#password').val();
+    if(password == ""){
+        return;
+    }
+    let regp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,15}$/;
+    if(password!=""&&!regp.test(password)){
+        alert("密码由6到15位的 数字与字母 组成")
+        return;
+    }
     let uname = $('#addUame').val();
+    if(uname == ""){
+        alert("姓名不能为空")
+        return;
+    }
     let usex;
     for(var a of aGender){
         if(a.checked){
@@ -178,14 +214,16 @@ $("#add-confirm").click(function () {
         success: function (res) {
             if (res.msg == "success") {
                 $('#add-modal').css('display', 'none');
-                // getList(noPage, pageSize, queryName);
-                  getList()
+                // getUserList(noPage, pageSize, queryName);
+                  getUserList()
                 // console.log(res.msg)
                 alert('添加成功');
+                $("#userForm-a")[0].reset()
+                $("input:radio[name='gender']:checked").removeAttr("checked")
             }
         },
         error: function () {
-            alert("账号已存在")
+            alert("添加失败")
         }
     })
 })
@@ -194,7 +232,7 @@ $("#add-confirm").click(function () {
 
 
 //删除的点击事件
-function delList(no) {
+function delUserList(no) {
     // console.log(id);
     // console.log(noPage);
     var del = confirm("是否删除");
@@ -208,7 +246,7 @@ function delList(no) {
             contentType: 'application/x-www-form-urlencoded',
             success: function (res) {
                 if (res) {
-                    getList(noPage, pageSize, queryName);
+                    getUserList(noPage, pageSize, queryName);
                 }
             }
         });
@@ -217,7 +255,7 @@ function delList(no) {
 
 
 // 修改的点击事件
-function modList(no) {
+function modUserList(no) {
     $.ajax({
         method: 'GET',
         url: 'http://localhost:8181/manager/message/info/' + no,
@@ -231,15 +269,15 @@ function modList(no) {
                 </div>
                 <div class="modal-body">
                   <form name="a">
-                      <p><label for="uno">账号：</label><input type="tel" name="uno" id="uno" class="gen" value="${user.uno}" disabled></p>
+                      <p><label for="uno">账号：</label><input type="tel" name="uno" id="uno" class="gen" value="${user.uno}" disabled minlength="11" maxlength="11"></p>
                       <p><label for="x-password">密码：</label><input type="password" name="password" id="x-password" class="gen" value="${user.password}">
-                          <span id="error1" class="error1">密码安全系数过低！</span>
+<!--                          <span id="error1" class="error1">密码安全系数过低！</span>-->
                       </p>
                       <p><label  for="x-username">姓名：</label><input type="text" name="dd" id="x-username" class="gen" value="${user.uname}"></p>
                       <p class="sex">
-                          <label for="gender">性别：
-                              <input type="radio" name="gender"  value="男" onclick="gd(this)"/>男
-                              <input type="radio" name="gender" value="女" onclick="gd(this)"/>女
+                          <label>性别：
+                              <input type="radio" name="gender-m"  value="男" onclick="gd(this)"/>男
+                              <input type="radio" name="gender-m" value="女" onclick="gd(this)"/>女
                           </label>
                       </p>
                       <p>
@@ -249,6 +287,7 @@ function modList(no) {
                   </form></div>`
                 $("#mod-modal").html(html2);
                 $("#mod-modal").css("display", "block")
+                $('input[name="gender-m"]').val([user.usex])
                 $('#mod-del').click(function () {
                     $('#mod-modal').css('display', 'none');
                 })
@@ -264,6 +303,11 @@ function modList(no) {
                     console.log(1)
                     let uno = $('#uno').val();
                     let password = $('#x-password').val();
+                    let regp = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,15}$/;
+                    if(password!=""&&!regp.test(password)){
+                        alert("密码由6到15位的 数字与字母 组成")
+                        return;
+                    }
                     let uname = $('#x-username').val();
                     let usex;
                     for(var a of aGender){
@@ -290,7 +334,7 @@ function modList(no) {
                             console.log(res)
                             if (res.msg == "success") {
                                 $('#mod-modal').css('display', 'none');
-                                getList(noPage, pageSize, queryName);
+                                getUserList(noPage, pageSize, queryName);
                                 alert("修改成功",res.msg);
                             } else {
                                 alert(res.msg)
@@ -308,66 +352,3 @@ function modList(no) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function test(){
-//     if(document.aa.bb.value.length!=11){
-//     alert("手机号长度必须为11位！");
-//     document.aa.bb.focus();
-//     return false;
-//     }
-//     if(document.aa.cc.value == ""){
-//     alert("密码为必填项");
-//     document.aa.cc.focus();
-//     return false;
-//     }
-// }
-// $('#error1').click(function(){
-//     $('#essor1').css('display',"none");
-// })
-//   function checkNumber(obj){
-//     var reg = /^[0-9]+$/;
-//     if(obj!=""&&!reg.test(obj)){
-//     alert('只能输入数字！');
-//     return false;
-//     }
-// }

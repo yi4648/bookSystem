@@ -62,7 +62,10 @@ header .header-right .btn-exit span{
     background: #333747;
     cursor: pointer;
   }
-  .home .main nav ul .user-manager a{
+.home .main nav ul .user-manager a{
+    color:#3588f3;
+}
+  .home .main nav ul .book-manager a{
     color:#fff;
   }
   .home .main nav ul li a:hover{

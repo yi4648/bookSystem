@@ -22,7 +22,7 @@
                 <div class="form-group">
                   <span class="glyphicon glyphicon-lock"></span>
                   <label for="password">密码</label>
-                  <input type="password" class="form-control" id="password" name="password" placeholder="请输入您的密码">
+                  <input type="password" class="form-control" id="password" name="password" onblur="checkPassword(this.value)" placeholder="请输入您的密码" maxlength="15">
                 </div>
                 
                 <button type="button" class="btn btn-default" id="login">登录</button>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="myForm">
+        <lable for="sex" id="sex">性别</lable>
+        <input type="radio" name="sex" value="男">男
+        <input type="radio" name="sex" value="女"> 女
+    </form>
+    <select id="mySelect" name="mySelect">
+        <option value="">请选择</option>
+        <option value="first" >第一</option>
+        <option value="second">第二</option>
+    </select>
+    <button>点击</button>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+    $("input[name='sex']").click(function(){
+        console.log($(this).val())
+    })
+    
+    
+    
+    // console.log()
+    // console.log($('#name').val() + "2")
+    // console.log(rs + "3")
+    // console.log(rs)
+    let data;
+   data: $('#mySelect option:selected').val()
+    console.log(data)
+   console.log($('#mySelect').change(function(){$('#mySelect option:selected').val()}))
+    $('input[name="sex"]').val(['女'])
+
+$("#name option[value='first']").attr("selected",'select')
+</script>
+</html>

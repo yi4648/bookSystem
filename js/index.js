@@ -5,7 +5,7 @@ function ulogin(){
         "username": username,
         "password": password
     }
-    $.ajax({
+     $.ajax({
         method: 'POST',
         url: 'http://localhost:8181/login',
         dataType: 'json',
@@ -15,7 +15,7 @@ function ulogin(){
         success: function(res) {
             if(res.msg=="success"){
                 // 存储本地信息
-                localStorage.setItem("loginInfo",JSON.stringify(res.message));
+                localStorage.setItem("res",JSON.stringify(res));
                 // console.log(localStorage.getItem("message"))
                 window.location="main.html"
             }else{
@@ -41,10 +41,18 @@ $("#login").click(function(){
     ulogin()
 })
 function checkNumber(obj){
-        var reg = /^[0-9]+$/;
-        if(obj!=""&&!reg.test(obj)){
+    var reg = /^[0-9]+$/;
+    if(obj!=""&&!reg.test(obj)){
         alert('只能输入数字！');
         return false;
     }
+}
+
+function checkPassword(obj){
+    let reg = /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,15}$/;
+    if(obj!=""&&!reg.test(obj)){
+        alert("密码由6到15位的 数字与字母 组成")
+        return false;
+    }   
 }
 
